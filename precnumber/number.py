@@ -1,15 +1,15 @@
-from math import floor
-
 def gcd(a, b):
-    if a == 0: return b
+    if a == 0:
+        return b
     return gcd(b % a, a)
+
 
 class Number:
     def __init__(self, num: int, den: int = 1):
         self.num = num
         self.den = den
         self.reduce()
-    
+
     def opposite(self):
         return Number(self.num * -1, self.den)
 
@@ -20,7 +20,8 @@ class Number:
         return self.num == number.num and self.den == number.den
 
     def __add__(self, number):
-        result = Number(self.num * number.den + number.num * self.den, self.den * number.den)
+        result = Number(self.num * number.den + number.num *
+                        self.den, self.den * number.den)
         result.reduce()
         return result
 
@@ -31,7 +32,7 @@ class Number:
         result = Number(self.num * number.num, self.den * number.den)
         result.reduce()
         return result
-    
+
     def __truediv__(self, number):
         return self * number.inverse()
 
@@ -39,7 +40,7 @@ class Number:
         return Number(self.num // self.den, 1)
 
     def __ceil__(self):
-        return floor(self) + Number(1, 1)
+        return self.__floor__() + Number(1, 1)
 
     def reduce(self):
         div = gcd(self.num, self.den)
@@ -48,7 +49,7 @@ class Number:
 
     def __str__(self):
         return f"{self.num}" if self.den == 1 else f"{self.num}/{self.den}"
-        
+
     def _ipython_display_(self):
         print(self)
 
